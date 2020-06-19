@@ -6,10 +6,7 @@ import com.dwj.vblogold.entity.TagsEntity;
 import com.dwj.vblogold.response.JsonResponse;
 import com.dwj.vblogold.service.TagsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -18,7 +15,8 @@ import java.io.IOException;
  * @author dwj
  * @date 2020-06-09 22:46
  */
-@RestController
+@RestController("TagsController")
+@RequestMapping("/api/tags")
 public class TagsController {
 
     @Autowired

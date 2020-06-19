@@ -7,12 +7,8 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -26,8 +22,8 @@ import java.io.IOException;
  * @author dwj
  * @date 2020-06-09 22:46
  */
-@Controller
-@RequestMapping("/captcha")
+@RestController
+@RequestMapping("/api/captcha")
 @Slf4j
 public class KapthaController {
 

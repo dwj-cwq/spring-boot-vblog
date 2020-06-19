@@ -20,7 +20,8 @@ import java.io.IOException;
  * @author dwj
  * @date 2020-06-09 22:46
  */
-@RestController
+@RestController("ArticleController")
+@RequestMapping("/api/article")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;

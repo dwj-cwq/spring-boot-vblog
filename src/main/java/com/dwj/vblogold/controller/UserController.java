@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * @date 2020-06-09 22:46
  */
 @RestController("UserController")
-@RequestMapping()
+@RequestMapping("/api/user")
 public class UserController {
     public final static String LOGIN_NAME_KEY = "LOGIN_NAME";
 
