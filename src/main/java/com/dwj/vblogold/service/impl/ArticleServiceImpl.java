@@ -34,7 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public PageList<ArticleEntity> queryArticleList(String key, Integer offset, Integer limit) {
         PageList<ArticleEntity> articlePageList = new PageList<>();
-        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByKey(key, offset, limit);
+        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByKey(key, offset - 1, limit);
         int total = articleRepository.queryArticleTotalByKey(key);
 
         articlePageList.setRows(articleEntityList);
@@ -46,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public PageList<ArticleEntity> queryArticleListByTimeLine(String TimeLine, Integer offset, Integer limit) {
         PageList<ArticleEntity> articlePageList = new PageList<>();
-        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByTimeLine(TimeLine, offset, limit);
+        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByTimeLine(TimeLine, offset - 1, limit);
         int total = articleRepository.queryArticleTotalByTimeLine(TimeLine);
 
         articlePageList.setRows(articleEntityList);
@@ -58,7 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public PageList<ArticleEntity> queryArticleListByVisits(Integer offset, Integer limit) {
         PageList<ArticleEntity> articlePageList = new PageList<>();
-        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByVisits(offset, limit);
+        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByVisits(offset - 1, limit);
         int total = articleRepository.queryArticleTotalByKey("");
         articlePageList.setRows(articleEntityList);
         articlePageList.setTotal(total);

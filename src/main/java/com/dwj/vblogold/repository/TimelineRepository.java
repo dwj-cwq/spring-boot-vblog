@@ -18,7 +18,7 @@ public interface TimelineRepository extends JpaRepositoryImplementation<Timeline
     List<TimelineEntity> queryTimelineListByName(@Param("name") String name);
 
     @Modifying
-    @Query(value = "select * from timeline tl order by tl.create_time desc limit :offset - 1, :limit", nativeQuery = true)
+    @Query(value = "select * from timeline tl order by tl.create_time desc limit :offset, :limit", nativeQuery = true)
     List<TimelineEntity> queryTimelineList(@Param("offset") Integer offset, @Param("limit") Integer limit);
 
 }

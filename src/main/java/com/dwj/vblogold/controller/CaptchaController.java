@@ -22,10 +22,10 @@ import java.io.IOException;
  * @author dwj
  * @date 2020-06-09 22:46
  */
-@RestController
+@RestController("CaptchaController")
 @RequestMapping("/api/captcha")
 @Slf4j
-public class KapthaController {
+public class CaptchaController {
 
     @Autowired
     public Producer producer;
@@ -48,10 +48,10 @@ public class KapthaController {
         ImageIO.write(image, "jpg", out);
     }
 
-    @PostMapping("/verify")
+    @PostMapping("/verify/{captcha}")
     @ResponseBody
     @ControllerLog
-    public JsonResponse verify(String captcha, HttpSession session) {
+    public JsonResponse verify(@PathVariable("captcha") String captcha, HttpSession session) {
         String sessionCaptcha = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (!StringUtils.hasLength(sessionCaptcha)) {
             return JsonResponse.response(ResponseCode.NOT_GET_CAPTCHA);

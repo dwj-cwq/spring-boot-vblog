@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface MessageBoardRepository extends JpaRepositoryImplementation<MessageBoardEntity, Long> {
     @Modifying
-    @Query(value = "select * from message_board order by message_board.create_time desc limit :offset - 1, :limit", nativeQuery = true)
+    @Query(value = "select * from message_board order by message_board.create_time desc limit :offset, :limit", nativeQuery = true)
     List<MessageBoardEntity> queryMessageList(@Param("offset") Integer offset, @Param("limit") Integer limit);
 }

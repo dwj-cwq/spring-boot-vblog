@@ -17,7 +17,7 @@ import java.util.List;
 @Repository("UserRepository")
 public interface UserRepository extends JpaRepositoryImplementation<UserEntity, Long> {
     @Modifying
-    @Query(value = "select * from user u where u.user_name like concat('%',:username,'%') order by u.create_time desc limit :offset - 1, :limit", nativeQuery = true)
+    @Query(value = "select * from user u where u.user_name like concat('%',:username,'%') order by u.create_time desc limit :offset, :limit", nativeQuery = true)
     List<UserEntity> queryUserList(@Param("username") String username, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
     @Modifying

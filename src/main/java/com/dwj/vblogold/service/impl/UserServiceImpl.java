@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageList<UserEntity> queryUserList(String username, Integer offset, Integer limit) {
         PageList<UserEntity> userPageList = new PageList<>();
-        List<UserEntity> userList = userRepository.queryUserList(username, offset, limit);
+        List<UserEntity> userList = userRepository.queryUserList(username, offset - 1, limit);
         int total = userRepository.queryUserTotal(username);
         userPageList.setRows(userList);
         userPageList.setTotal(total);

@@ -15,7 +15,7 @@ import java.util.List;
 public interface LogRepository extends JpaRepositoryImplementation<LogEntity, Long> {
     @Modifying
     @Query(value = "select * from log l where l.ip like concat('%',:keyname,'%') or l.operation like concat('%',:keyname,'%' ) " +
-            "order by l.create_time desc limit :offset -1, :limit", nativeQuery = true)
+            "order by l.create_time desc limit :offset, :limit", nativeQuery = true)
     List<LogEntity> queryLogList(@Param("key") String keyName, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
     @Modifying

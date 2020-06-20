@@ -33,6 +33,7 @@ public class GlobalExceptionHandler {
         log.warn("Incorrect Credential Exception", e);
         return JsonResponse.response(ResponseCode.PASSWORD_ERROR);
     }
+    
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public JsonResponse handle(HttpServletRequest request, Exception e) {

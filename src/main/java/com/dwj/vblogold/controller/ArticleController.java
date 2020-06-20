@@ -5,10 +5,12 @@ import com.dwj.vblogold.entity.ArticleEntity;
 import com.dwj.vblogold.entity.PageList;
 import com.dwj.vblogold.response.ImageResponse;
 import com.dwj.vblogold.response.JsonResponse;
+import com.dwj.vblogold.response.ResponseCode;
 import com.dwj.vblogold.service.ArticleService;
 import com.dwj.vblogold.util.FileUtil;
 import com.dwj.vblogold.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,8 +38,11 @@ public class ArticleController {
         if (limit <= 0) {
             limit = 10;
         }
-        PageList<ArticleEntity> PageArticleList = articleService.queryArticleList(key, offset, limit);
-        return JsonResponse.success(PageArticleList);
+        if (StringUtils.isEmpty(key)) {
+            return JsonResponse.response(ResponseCode.BAD_REQUEST.setMessage("key is empty!"));
+        }
+        PageList<ArticleEntity> pageArticleList = articleService.queryArticleList(key, offset, limit);
+        return JsonResponse.success(pageArticleList);
     }
 
     @ResponseBody
@@ -50,8 +55,8 @@ public class ArticleController {
         if (limit <= 0) {
             limit = 10;
         }
-        PageList<ArticleEntity> PageArticleList = articleService.queryArticleListByTimeLine(timeLine, offset, limit);
-        return JsonResponse.success(PageArticleList);
+        PageList<ArticleEntity> pageArticleList = articleService.queryArticleListByTimeLine(timeLine, offset, limit);
+        return JsonResponse.success(pageArticleList);
     }
 
     @ResponseBody

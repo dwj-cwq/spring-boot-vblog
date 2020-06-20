@@ -23,7 +23,7 @@ public class LogServiceImpl implements LogService {
     @Override
     public PageList<LogEntity> queryList(String key, Integer offset, Integer limit) {
         PageList<LogEntity> logPageList = new PageList<>();
-        List<LogEntity> userList = logRepository.queryLogList(key, offset, limit);
+        List<LogEntity> userList = logRepository.queryLogList(key, offset - 1, limit);
         int total = logRepository.queryLogTotal(key);
         logPageList.setRows(userList);
         logPageList.setTotal(total);
