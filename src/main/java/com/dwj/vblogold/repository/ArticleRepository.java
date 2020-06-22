@@ -14,32 +14,26 @@ import java.util.List;
  */
 public interface ArticleRepository extends JpaRepositoryImplementation<ArticleEntity, Long> {
 
-    @Modifying
     @Query(value = "select * from article a where a.author like concat('%',:keyName,'%') " +
             "or a.article_title like concat('%',:keyName,'%') " +
             "or a.categories like concat('%',:keyName,'%') " +
             "order by a.create_time desc limit :offset, :limit", nativeQuery = true)
     List<ArticleEntity> queryArticleListByKey(@Param("key") String keyName, @Param("offset") int offset, @Param("limit") int limit);
 
-    @Modifying
     @Query(value = "select count(*) from article where article.author like concat('%',:keyName,'%') " +
             "or article.article_title like concat('%',:keyName,'%') " +
             "or article.categories like concat('%',:keyName,'%')", nativeQuery = true)
     int queryArticleTotalByKey(@Param("key") String keyName);
 
-    @Modifying
     @Query(value = "select * from article a where a.timeline =:timeLine order by a.visits desc limit :offset, :limit", nativeQuery = true)
     List<ArticleEntity> queryArticleListByTimeLine(@Param("timeLine") String timeLine, @Param("offset") int offset, @Param("limit") int limit);
 
-    @Modifying
     @Query(value = "select count(*) from article a where a.timeline =:timeLine", nativeQuery = true)
     int queryArticleTotalByTimeLine(@Param("timeLine") String timeLine);
 
-    @Modifying
     @Query(value = "select * from article a order by a.visits desc limit :offset ,:limit", nativeQuery = true)
     List<ArticleEntity> queryArticleListByVisits(@Param("offset") int offset, @Param("limit") int limit);
 
-    @Modifying
     @Query(value = "select id from article a order by a.create_time desc limit 1", nativeQuery = true)
     ArticleEntity queryPrePageId();
 

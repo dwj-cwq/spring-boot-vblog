@@ -34,7 +34,13 @@ public class LogEntity extends BaseEntity {
     @Column(name = "params")
     private String params;
 
-    @Column(name = "spendTime")
+    @Column(name = "spend_time")
     private Integer spendTime;
+
+    @Column(name = "response")
+    private String response;
+
+    @Column(name = "user_name")
+    private String userName;
 
 }

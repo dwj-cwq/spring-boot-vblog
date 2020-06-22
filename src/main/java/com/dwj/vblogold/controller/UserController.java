@@ -5,10 +5,12 @@ import com.dwj.vblogold.entity.UserEntity;
 import com.dwj.vblogold.response.JsonResponse;
 import com.dwj.vblogold.response.ResponseCode;
 import com.dwj.vblogold.service.UserService;
+import com.dwj.vblogold.vo.UserInfoVO;
 import com.google.code.kaptcha.Constants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -61,7 +63,9 @@ public class UserController {
 
     @ControllerLog("用户登录")
     @PostMapping("/login")
-    public JsonResponse login(String username, String password, HttpSession session) {
+    public JsonResponse login(@RequestBody @Validated UserInfoVO userInfoVO, HttpSession session) {
+        String username = userInfoVO.getUsername();
+        String password = userInfoVO.getPassword();
         Long verifyTime = (Long) session.getAttribute(Constants.KAPTCHA_SESSION_DATE);
         session.removeAttribute(Constants.KAPTCHA_SESSION_DATE);
         if (null == verifyTime || System.currentTimeMillis() - verifyTime > 5 * 60 * 1000) {
