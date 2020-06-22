@@ -1,6 +1,6 @@
 package com.dwj.vblogold.repository;
 
-import com.dwj.vblogold.entity.CurrentUserInfo;
+import com.dwj.vblogold.dto.CurrentUserInfo;
 import com.dwj.vblogold.entity.UserEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
@@ -24,6 +24,6 @@ public interface UserRepository extends JpaRepositoryImplementation<UserEntity, 
     @Query(value = "select * from user u where u.user_name =:username", nativeQuery = true)
     UserEntity queryUserByName(@Param("username") String username);
 
-    @Query(value = "select u.user_name, u.avatar_url from user u where u.user_name =:username", nativeQuery = true)
+    @Query(value = "select u.user_name as userName, u.avatar_url as avatarUrl from user u where u.user_name =:username", nativeQuery = true)
     CurrentUserInfo queryUserInfoByName(@Param("username") String username);
 }

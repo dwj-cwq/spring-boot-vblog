@@ -1,6 +1,6 @@
 package com.dwj.vblogold.service;
 
-import com.dwj.vblogold.entity.CurrentUserInfo;
+import com.dwj.vblogold.dto.CurrentUserInfo;
 import com.dwj.vblogold.entity.PageList;
 import com.dwj.vblogold.entity.UserEntity;
 
