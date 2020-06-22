@@ -20,6 +20,9 @@ public interface ArticleRepository extends JpaRepositoryImplementation<ArticleEn
             "order by a.create_time desc limit :offset, :limit", nativeQuery = true)
     List<ArticleEntity> queryArticleListByKey(@Param("key") String keyName, @Param("offset") int offset, @Param("limit") int limit);
 
+    @Query(value = "select * from article a order by a.create_time desc limit ?1, ?2", nativeQuery = true)
+    List<ArticleEntity> findAllArticles(int offset, int limit);
+
     @Query(value = "select count(*) from article where article.author like concat('%',:keyName,'%') " +
             "or article.article_title like concat('%',:keyName,'%') " +
             "or article.categories like concat('%',:keyName,'%')", nativeQuery = true)

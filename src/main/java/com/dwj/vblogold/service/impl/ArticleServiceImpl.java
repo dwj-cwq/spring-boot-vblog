@@ -32,6 +32,17 @@ public class ArticleServiceImpl implements ArticleService {
     private TimelineRepository timelineRepository;
 
     @Override
+    public PageList<ArticleEntity> getAllArticles(Integer offset, Integer limit) {
+        PageList<ArticleEntity> articlePageList = new PageList<>();
+        List<ArticleEntity> articleEntityList = articleRepository.findAllArticles(offset - 1, limit);
+        int total = (int) articleRepository.count();
+
+        articlePageList.setRows(articleEntityList);
+        articlePageList.setTotal(total);
+        return articlePageList;
+    }
+
+    @Override
     public PageList<ArticleEntity> queryArticleList(String key, Integer offset, Integer limit) {
         PageList<ArticleEntity> articlePageList = new PageList<>();
         List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByKey(key, offset - 1, limit);

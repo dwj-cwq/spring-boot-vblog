@@ -5,7 +5,6 @@ import com.dwj.vblogold.entity.ArticleEntity;
 import com.dwj.vblogold.entity.PageList;
 import com.dwj.vblogold.response.ImageResponse;
 import com.dwj.vblogold.response.JsonResponse;
-import com.dwj.vblogold.response.ResponseCode;
 import com.dwj.vblogold.service.ArticleService;
 import com.dwj.vblogold.util.FileUtil;
 import com.dwj.vblogold.util.TimeUtil;
@@ -29,7 +28,6 @@ public class ArticleController {
     private ArticleService articleService;
 
     @ResponseBody
-    @ControllerLog("查询文章")
     @GetMapping("/queryArticles")
     public JsonResponse getArticle(String key, int offset, int limit) {
         if (offset <= 0) {
@@ -39,14 +37,13 @@ public class ArticleController {
             limit = 10;
         }
         if (StringUtils.isEmpty(key)) {
-            return JsonResponse.response(ResponseCode.BAD_REQUEST.setMessage("key is empty!"));
+            return JsonResponse.success(articleService.getAllArticles(offset, limit));
         }
         PageList<ArticleEntity> pageArticleList = articleService.queryArticleList(key, offset, limit);
         return JsonResponse.success(pageArticleList);
     }
 
     @ResponseBody
-    @ControllerLog("查询文章")
     @GetMapping("/queryArticleListByTimeLine")
     public JsonResponse queryArticleListByTimeLine(String timeLine, int offset, int limit) {
         if (offset <= 0) {
@@ -85,7 +82,6 @@ public class ArticleController {
         return JsonResponse.success();
     }
 
-    @ControllerLog("查询文章内容")
     @GetMapping("/queryArticleByIdAuthor")
     public JsonResponse queryArticleByIdAuthor(Long articleId, String author) {
         ArticleEntity articleEntity = articleService.queryArticle(articleId, author);

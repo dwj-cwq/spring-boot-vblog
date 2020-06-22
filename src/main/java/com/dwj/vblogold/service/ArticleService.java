@@ -20,6 +20,15 @@ public interface ArticleService {
     PageList<ArticleEntity> queryArticleList(String key, Integer offset, Integer limit);
 
     /**
+     * 分页获取所有 article
+     *
+     * @param offset 偏移量
+     * @param limit  条数
+     * @return 文章列表
+     */
+    PageList<ArticleEntity> getAllArticles(Integer offset, Integer limit);
+
+    /**
      * 根据时间轴字段查询
      *
      * @param timeLine 时间轴

@@ -37,7 +37,7 @@ public class LogEntity extends BaseEntity {
     @Column(name = "spend_time")
     private Integer spendTime;
 
-    @Column(name = "response")
+    @Column(name = "response", columnDefinition = "text")
     private String response;
 
     @Column(name = "user_name")
