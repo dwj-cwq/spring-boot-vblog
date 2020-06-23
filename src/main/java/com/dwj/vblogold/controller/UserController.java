@@ -28,7 +28,7 @@ public class UserController {
     private UserService userService;
 
     @ControllerLog("创建用户")
-    @PostMapping
+    @PostMapping("/signUp")
     public JsonResponse createUser(@RequestBody UserEntity userEntity) {
         return JsonResponse.success(userService.addUser(userEntity));
     }

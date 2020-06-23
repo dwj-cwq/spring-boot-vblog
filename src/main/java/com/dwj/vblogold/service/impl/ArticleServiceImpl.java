@@ -1,19 +1,17 @@
 package com.dwj.vblogold.service.impl;
 
+import com.dwj.vblogold.dto.ArticleInfo;
 import com.dwj.vblogold.entity.ArticleEntity;
 import com.dwj.vblogold.entity.PageList;
 import com.dwj.vblogold.entity.TimelineEntity;
 import com.dwj.vblogold.repository.ArticleRepository;
 import com.dwj.vblogold.repository.TimelineRepository;
 import com.dwj.vblogold.service.ArticleService;
-import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Predicate;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,10 +53,10 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageList<ArticleEntity> queryArticleListByTimeLine(String TimeLine, Integer offset, Integer limit) {
+    public PageList<ArticleEntity> queryArticleListByTimeLine(String timeLine, Integer offset, Integer limit) {
         PageList<ArticleEntity> articlePageList = new PageList<>();
-        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByTimeLine(TimeLine, offset - 1, limit);
-        int total = articleRepository.queryArticleTotalByTimeLine(TimeLine);
+        List<ArticleEntity> articleEntityList = articleRepository.queryArticleListByTimeLine(timeLine, offset - 1, limit);
+        int total = articleRepository.queryArticleTotalByTimeLine(timeLine);
 
         articlePageList.setRows(articleEntityList);
         articlePageList.setTotal(total);
@@ -86,13 +84,13 @@ public class ArticleServiceImpl implements ArticleService {
 
         String timelineName = dateFormat.format(new Date());
 
-        ArticleEntity preArticleEntity = articleRepository.queryPrePageId();
+        ArticleInfo preArticleInfo = articleRepository.queryPrePageId();
 
-        if (preArticleEntity != null) {
-            long nextArticleId = preArticleEntity.getId() + 1;
+        if (preArticleInfo != null) {
+            long nextArticleId = preArticleInfo.getId() + 1;
             // 更新上一页的下页id
             articleRepository.updatePrePageNextId(nextArticleId);
-            articleEntity.setLastArticleId(preArticleEntity.getId());
+            articleEntity.setLastArticleId(preArticleInfo.getId());
         }
 
         articleEntity.setTimeline(timelineName);
@@ -113,16 +111,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleEntity queryArticle(Long articleId, String author) {
-        return articleRepository.findOne((root, query, cb) -> {
-            List<Predicate> predicates = new ArrayList<>();
-            if (articleId != null) {
-                predicates.add(cb.equal(root.get("artilce_id"), articleId));
-            }
-            if (!Strings.isNullOrEmpty(author)) {
-                predicates.add(cb.equal(root.get("author"), author));
-            }
-            return cb.and(predicates.toArray(new Predicate[0]));
-        }).get();
+        return articleRepository.queryArticle(articleId, author);
     }
 
     @Override

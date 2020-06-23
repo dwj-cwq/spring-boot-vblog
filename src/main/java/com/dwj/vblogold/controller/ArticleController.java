@@ -66,8 +66,8 @@ public class ArticleController {
         if (limit <= 0) {
             limit = 10;
         }
-        PageList<ArticleEntity> PageArticleList = articleService.queryArticleListByVisits(offset, limit);
-        return JsonResponse.success(PageArticleList);
+        PageList<ArticleEntity> pageArticleList = articleService.queryArticleListByVisits(offset, limit);
+        return JsonResponse.success(pageArticleList);
     }
 
 
@@ -113,8 +113,7 @@ public class ArticleController {
             TimeUtil timeUtil = new TimeUtil();
             String fileName = timeUtil.getLongTime() + "." + fileExtension;
 
-            String subCatalog = "blogArticles/" + new TimeUtil().getFormatDateForThree();
-            String fileUrl = fileUtil.uploadFile(fileUtil.multipartFileToFile(file, filePath, fileName), subCatalog);
+            String fileUrl = fileUtil.uploadFile(fileUtil.multipartFileToFile(file, filePath, fileName));
 
             imageResponse.setSuccess(1);
             imageResponse.setMessage("上传成功");

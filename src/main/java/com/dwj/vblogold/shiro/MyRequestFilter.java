@@ -32,7 +32,8 @@ public class MyRequestFilter extends AccessControlFilter {
                 url.contains("getTags") || url.contains("getTimeline") || url.contains("getCurrentUser") ||
                 url.contains("queryArticleListByTimeLine") || url.contains("queryArticleInfoById")||
                 url.contains("uploadImage") || url.contains("getMessageBoard") ||
-                url.contains("saveMessageBoard") || url.contains("queryArticleListByVisits")) {
+                url.contains("saveMessageBoard") || url.contains("queryArticleListByVisits") ||
+                url.contains("signUp")) {
 
             return true;
         }
