@@ -23,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity addUser(UserEntity userEntity) {
+        if (isExist(userEntity.getUserName())) {
+            return null;
+        }
         return userRepository.save(userEntity);
     }
 
@@ -60,6 +63,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public CurrentUserInfo queryUserInfoByName(String username) {
         return userRepository.queryUserInfoByName(username);
+    }
+
+    @Override
+    public boolean isExist(String username) {
+        return userRepository.queryUserByName(username) != null;
     }
 
 }

@@ -30,7 +30,8 @@ public class UserController {
     @ControllerLog("创建用户")
     @PostMapping("/signUp")
     public JsonResponse createUser(@RequestBody UserEntity userEntity) {
-        return JsonResponse.success(userService.addUser(userEntity));
+        UserEntity user = userService.addUser(userEntity);
+        return user == null ? JsonResponse.response(ResponseCode.USER_IS_EXISTS) : JsonResponse.success();
     }
 
     @ControllerLog("更新用户")

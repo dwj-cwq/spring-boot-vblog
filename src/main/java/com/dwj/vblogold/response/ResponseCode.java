@@ -9,6 +9,7 @@ public enum ResponseCode {
     BAD_REQUEST(400, "错误请求"),
     NOT_LOGIN(1004, "未登录"),
     USER_NO_EXISTS(1005, "用户名不存在"),
+    USER_IS_EXISTS(1009, "用户名已存在"),
     PASSWORD_ERROR(1006, "密码错误"),
     NOT_GET_CAPTCHA(1007, "请先获取校验码"),
     CAPTCHA_VERIFY_FAILED(1008, "校验码未校验通过"),
