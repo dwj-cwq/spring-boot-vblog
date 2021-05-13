@@ -7,12 +7,8 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -26,10 +22,10 @@ import java.io.IOException;
  * @author dwj
  * @date 2020-06-09 22:46
  */
-@Controller
-@RequestMapping("/captcha")
+@RestController("CaptchaController")
+@RequestMapping("/api/captcha")
 @Slf4j
-public class KapthaController {
+public class CaptchaController {
 
     @Autowired
     public Producer producer;
@@ -52,10 +48,10 @@ public class KapthaController {
         ImageIO.write(image, "jpg", out);
     }
 
-    @PostMapping("/verify")
+    @PostMapping("/verify/{captcha}")
     @ResponseBody
     @ControllerLog
-    public JsonResponse verify(String captcha, HttpSession session) {
+    public JsonResponse verify(@PathVariable("captcha") String captcha, HttpSession session) {
         String sessionCaptcha = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (!StringUtils.hasLength(sessionCaptcha)) {
             return JsonResponse.response(ResponseCode.NOT_GET_CAPTCHA);

@@ -1,6 +1,6 @@
 package com.dwj.vblogold.service.impl;
 
-import com.dwj.vblogold.entity.CurrentUserInfo;
+import com.dwj.vblogold.dto.CurrentUserInfo;
 import com.dwj.vblogold.entity.PageList;
 import com.dwj.vblogold.entity.UserEntity;
 import com.dwj.vblogold.repository.UserRepository;
@@ -23,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity addUser(UserEntity userEntity) {
+        if (isExist(userEntity.getUserName())) {
+            return null;
+        }
         return userRepository.save(userEntity);
     }
 
@@ -39,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageList<UserEntity> queryUserList(String username, Integer offset, Integer limit) {
         PageList<UserEntity> userPageList = new PageList<>();
-        List<UserEntity> userList = userRepository.queryUserList(username, offset, limit);
+        List<UserEntity> userList = userRepository.queryUserList(username, offset - 1, limit);
         int total = userRepository.queryUserTotal(username);
         userPageList.setRows(userList);
         userPageList.setTotal(total);
@@ -60,6 +63,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public CurrentUserInfo queryUserInfoByName(String username) {
         return userRepository.queryUserInfoByName(username);
+    }
+
+    @Override
+    public boolean isExist(String username) {
+        return userRepository.queryUserByName(username) != null;
     }
 
 }

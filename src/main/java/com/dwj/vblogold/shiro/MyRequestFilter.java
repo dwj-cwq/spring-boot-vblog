@@ -23,16 +23,14 @@ public class MyRequestFilter extends AccessControlFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
         String url = ((ShiroHttpServletRequest) servletRequest).getRequestURI();
-        if (url.contains("swagger") || url.contains("api-docs") || url.contains(".png") ||
-                url.contains(".html") || url.contains(".js") || url.contains(".css") ||
-                url.contains(".ttf") || url.contains(".eot") || url.contains(".woff") ||
-                url.contains(".apk") || url.contains(".crx") || url.contains(".ipa") ||
+        if (url.contains("swagger") || url.contains("api-docs") ||
                 url.contains("login") || url.contains("logout") || url.contains("captcha") || url.contains(".ico") ||
-                "/blog/".equals(url) || url.contains("queryArticles")|| url.contains("queryArticleByIdAuthor") ||
+                url.contains("queryArticles") || url.contains("queryArticleByIdAuthor") ||
                 url.contains("getTags") || url.contains("getTimeline") || url.contains("getCurrentUser") ||
                 url.contains("queryArticleListByTimeLine") || url.contains("queryArticleInfoById")||
                 url.contains("uploadImage") || url.contains("getMessageBoard") ||
-                url.contains("saveMessageBoard") || url.contains("queryArticleListByVisits")) {
+                url.contains("saveMessageBoard") || url.contains("queryArticleListByVisits") ||
+                url.contains("signUp")) {
 
             return true;
         }

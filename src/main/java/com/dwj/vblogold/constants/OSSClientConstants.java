@@ -6,26 +6,27 @@ package com.dwj.vblogold.constants;
  */
 public class OSSClientConstants {
     /**
-     * 阿里云API的外网域名
+     * app_id
      */
-    public static final String ENDPOINT = "xxx";
+    public static final String APP_ID = "1257281197";
 
     /**
-     * 阿里云API的密钥Access Key ID
+     * 密钥Access Key ID
      */
-    public static final String ACCESS_KEY_ID = "xxxx";
+    public static final String ACCESS_KEY_ID = "AKIDe6HCrJjQ4bBdlcnYdRzV9WeU4xd3spKd";
     /**
-     *阿里云API的密钥Access Key Secret
+     * 密钥Access Key Secret
      */
-    public static final String ACCESS_KEY_SECRET = "xxx";
+    public static final String ACCESS_KEY_SECRET = "lyyiALFXUdZGhusQjngLmgzsWWBZoxqS";
 
     /**
-     * 阿里云API的bucket名称
+     * 存储桶名称，格式：BucketName-APPID
      */
-    public static final String BACKET_NAME = "remango-blog";
+    public static final String BACKET_NAME = "vblogBucket" + APP_ID;
 
     /**
-     * 阿里云API的文件夹名称
+     * COS 区域缩写
      */
-    public static final String FOLDER="public/";
+    public static final String REGION = "ap-beijing";
+
 }

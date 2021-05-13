@@ -27,6 +27,8 @@ import java.util.Map;
 @Component
 @Slf4j
 public class ControllerLogAspect {
+    private final static String LOGIN_NAME_KEY = "LOGIN_NAME";
+
     @Autowired
     private LogService logService;
 
@@ -48,7 +50,7 @@ public class ControllerLogAspect {
         String url = request.getRequestURL().toString();
         String httpMethod = request.getMethod();
         String ip = request.getRemoteAddr();
-        // 记录输出参数
+        // 记录输入参数
         Map<String, String[]> params = request.getParameterMap();
         log.debug("==>Request: [ip:{}, url:{}, httpMethod:{}, Parameters:{}]", ip, url, httpMethod, JSON.toJSONString(params));
         // 计算耗费时间
@@ -64,14 +66,18 @@ public class ControllerLogAspect {
         log.debug("{} in {} ms", url, takingTime);
 
         // 输入输出参数的最大长度为2048，超过最大长度，截取前面2048个字符
-        String paramsDB = JSON.toJSONString(params).length() >= 2048 ? JSON.toJSONString(params).substring(0, 2048) : JSON.toJSONString(params);
+        String requestParams = JSON.toJSONString(params).length() >= 2048 ? JSON.toJSONString(params).substring(0, 2048) : JSON.toJSONString(params);
+        String response = JSON.toJSONString(result).length() >= 2048 ? JSON.toJSONString(result).substring(0, 2048) : JSON.toJSONString(result);
+        String userName = (String) request.getSession().getAttribute(LOGIN_NAME_KEY);
         LogEntity logEntity = new LogEntity();
         logEntity.setIp(ip);
         logEntity.setMethod(httpMethod);
-        logEntity.setParams(paramsDB);
+        logEntity.setParams(requestParams);
         logEntity.setSpendTime((int)takingTime);
         logEntity.setOperation(msg);
         logEntity.setCreateTime(new Date());
+        logEntity.setResponse(response);
+        logEntity.setUserName(userName);
 
         logService.saveLog(logEntity);
 

@@ -1,5 +1,7 @@
 package com.dwj.vblogold.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -15,6 +17,8 @@ import java.util.Date;
  * @date 2020-06-09 22:46
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @DynamicInsert
 @DynamicUpdate

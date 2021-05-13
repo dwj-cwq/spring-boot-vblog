@@ -1,6 +1,6 @@
 package com.dwj.vblogold.service;
 
-import com.dwj.vblogold.entity.CurrentUserInfo;
+import com.dwj.vblogold.dto.CurrentUserInfo;
 import com.dwj.vblogold.entity.PageList;
 import com.dwj.vblogold.entity.UserEntity;
 
@@ -46,4 +46,11 @@ public interface UserService {
      * @param username 用户名
      */
     CurrentUserInfo queryUserInfoByName(String username);
+
+    /**
+     * 根据用户名查询该用户名是否存在
+     *
+     * @param username 用户名
+     */
+    boolean isExist(String username);
 }

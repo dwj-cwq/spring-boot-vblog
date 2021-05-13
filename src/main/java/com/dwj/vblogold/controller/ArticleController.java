@@ -9,6 +9,7 @@ import com.dwj.vblogold.service.ArticleService;
 import com.dwj.vblogold.util.FileUtil;
 import com.dwj.vblogold.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,13 +21,13 @@ import java.io.IOException;
  * @author dwj
  * @date 2020-06-09 22:46
  */
-@RestController
+@RestController("ArticleController")
+@RequestMapping("/api/article")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
     @ResponseBody
-    @ControllerLog("查询文章")
     @GetMapping("/queryArticles")
     public JsonResponse getArticle(String key, int offset, int limit) {
         if (offset <= 0) {
@@ -35,12 +36,14 @@ public class ArticleController {
         if (limit <= 0) {
             limit = 10;
         }
-        PageList<ArticleEntity> PageArticleList = articleService.queryArticleList(key, offset, limit);
-        return JsonResponse.success(PageArticleList);
+        if (StringUtils.isEmpty(key)) {
+            return JsonResponse.success(articleService.getAllArticles(offset, limit));
+        }
+        PageList<ArticleEntity> pageArticleList = articleService.queryArticleList(key, offset, limit);
+        return JsonResponse.success(pageArticleList);
     }
 
     @ResponseBody
-    @ControllerLog("查询文章")
     @GetMapping("/queryArticleListByTimeLine")
     public JsonResponse queryArticleListByTimeLine(String timeLine, int offset, int limit) {
         if (offset <= 0) {
@@ -49,8 +52,8 @@ public class ArticleController {
         if (limit <= 0) {
             limit = 10;
         }
-        PageList<ArticleEntity> PageArticleList = articleService.queryArticleListByTimeLine(timeLine, offset, limit);
-        return JsonResponse.success(PageArticleList);
+        PageList<ArticleEntity> pageArticleList = articleService.queryArticleListByTimeLine(timeLine, offset, limit);
+        return JsonResponse.success(pageArticleList);
     }
 
     @ResponseBody
@@ -63,8 +66,8 @@ public class ArticleController {
         if (limit <= 0) {
             limit = 10;
         }
-        PageList<ArticleEntity> PageArticleList = articleService.queryArticleListByVisits(offset, limit);
-        return JsonResponse.success(PageArticleList);
+        PageList<ArticleEntity> pageArticleList = articleService.queryArticleListByVisits(offset, limit);
+        return JsonResponse.success(pageArticleList);
     }
 
 
@@ -79,7 +82,6 @@ public class ArticleController {
         return JsonResponse.success();
     }
 
-    @ControllerLog("查询文章内容")
     @GetMapping("/queryArticleByIdAuthor")
     public JsonResponse queryArticleByIdAuthor(Long articleId, String author) {
         ArticleEntity articleEntity = articleService.queryArticle(articleId, author);
@@ -111,8 +113,7 @@ public class ArticleController {
             TimeUtil timeUtil = new TimeUtil();
             String fileName = timeUtil.getLongTime() + "." + fileExtension;
 
-            String subCatalog = "blogArticles/" + new TimeUtil().getFormatDateForThree();
-            String fileUrl = fileUtil.uploadFile(fileUtil.multipartFileToFile(file, filePath, fileName), subCatalog);
+            String fileUrl = fileUtil.uploadFile(fileUtil.multipartFileToFile(file, filePath, fileName));
 
             imageResponse.setSuccess(1);
             imageResponse.setMessage("上传成功");

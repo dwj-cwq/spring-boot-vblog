@@ -3,16 +3,14 @@ package com.dwj.vblogold.controller;
 import com.dwj.vblogold.response.JsonResponse;
 import com.dwj.vblogold.service.TimelineService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author dwj
  * @date 2020-06-09 22:46
  */
-@RestController
+@RestController("TimelineController")
+@RequestMapping("/api/timeline")
 public class TimelineController {
 
     @Autowired

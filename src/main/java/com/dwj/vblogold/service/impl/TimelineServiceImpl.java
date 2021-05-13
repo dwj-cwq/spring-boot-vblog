@@ -22,7 +22,7 @@ public class TimelineServiceImpl implements TimelineService {
     public PageList<TimelineEntity> queryTimelineList(Integer offset, Integer limit) {
         PageList<TimelineEntity> timelinePageList = new PageList<>();
 
-        List<TimelineEntity> timelineEntityList = timelineRepository.queryTimelineList(offset, limit);
+        List<TimelineEntity> timelineEntityList = timelineRepository.queryTimelineList(offset - 1, limit);
         int total = timelineRepository.findAll().size();
 
         timelinePageList.setRows(timelineEntityList);

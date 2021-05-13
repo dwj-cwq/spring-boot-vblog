@@ -28,7 +28,7 @@ public class MessageBoardServiceImpl implements MessageBoardService {
     @Override
     public PageList<MessageBoardEntity> queryMessageList(Integer offset, Integer limit) {
         PageList<MessageBoardEntity> messageBoardPageList = new PageList<>();
-        List<MessageBoardEntity> messageBoardEntityList = messageBoardRepository.queryMessageList(offset, limit);
+        List<MessageBoardEntity> messageBoardEntityList = messageBoardRepository.queryMessageList(offset - 1, limit);
         int total = (int) messageBoardRepository.count();
 
         messageBoardPageList.setRows(messageBoardEntityList);

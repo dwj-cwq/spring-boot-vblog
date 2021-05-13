@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
@@ -25,14 +24,14 @@ public class JsonResponse {
     @JsonIgnore
     Map<String, Object> complexProps;
 
-    private JsonResponse(){
-        code = HttpStatus.OK.value();
-        msg = HttpStatus.OK.getReasonPhrase();
+    private JsonResponse() {
+        code = ResponseCode.OK.getCode();
+        msg = ResponseCode.OK.getMessage();
     }
 
-    private JsonResponse(Object value){
-        code = HttpStatus.OK.value();
-        msg = HttpStatus.OK.getReasonPhrase();
+    private JsonResponse(Object value) {
+        code = ResponseCode.OK.getCode();
+        msg = ResponseCode.OK.getMessage();
         data = value;
     }
 
@@ -41,15 +40,21 @@ public class JsonResponse {
         this.msg = responseCode.getMessage();
     }
 
-    public static JsonResponse response(ResponseCode responseCode){
+    public <T> JsonResponse(int code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    public static JsonResponse response(ResponseCode responseCode) {
         return new JsonResponse(responseCode);
     }
 
-    public static JsonResponse success(){
+    public static JsonResponse success() {
         return new JsonResponse();
     }
 
-    public static JsonResponse success(Object data){
+    public static JsonResponse success(Object data) {
         return new JsonResponse(data);
     }
 }

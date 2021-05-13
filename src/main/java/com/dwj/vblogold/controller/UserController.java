@@ -5,10 +5,12 @@ import com.dwj.vblogold.entity.UserEntity;
 import com.dwj.vblogold.response.JsonResponse;
 import com.dwj.vblogold.response.ResponseCode;
 import com.dwj.vblogold.service.UserService;
+import com.dwj.vblogold.vo.UserInfoVO;
 import com.google.code.kaptcha.Constants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpSession;
  * @date 2020-06-09 22:46
  */
 @RestController("UserController")
-@RequestMapping()
+@RequestMapping("/api/user")
 public class UserController {
     public final static String LOGIN_NAME_KEY = "LOGIN_NAME";
 
@@ -26,9 +28,10 @@ public class UserController {
     private UserService userService;
 
     @ControllerLog("创建用户")
-    @PostMapping
+    @PostMapping("/signUp")
     public JsonResponse createUser(@RequestBody UserEntity userEntity) {
-        return JsonResponse.success(userService.addUser(userEntity));
+        UserEntity user = userService.addUser(userEntity);
+        return user == null ? JsonResponse.response(ResponseCode.USER_IS_EXISTS) : JsonResponse.success();
     }
 
     @ControllerLog("更新用户")
@@ -61,7 +64,9 @@ public class UserController {
 
     @ControllerLog("用户登录")
     @PostMapping("/login")
-    public JsonResponse login(String username, String password, HttpSession session) {
+    public JsonResponse login(@RequestBody @Validated UserInfoVO userInfoVO, HttpSession session) {
+        String username = userInfoVO.getUsername();
+        String password = userInfoVO.getPassword();
         Long verifyTime = (Long) session.getAttribute(Constants.KAPTCHA_SESSION_DATE);
         session.removeAttribute(Constants.KAPTCHA_SESSION_DATE);
         if (null == verifyTime || System.currentTimeMillis() - verifyTime > 5 * 60 * 1000) {
