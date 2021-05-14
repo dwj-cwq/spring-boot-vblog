@@ -65,6 +65,14 @@ public interface ArticleService {
     ArticleEntity queryArticle(Long articleId, String author);
 
     /**
+     * 通过作者查询文章
+     *
+     * @param articleId 文章id
+     * @param author    作者
+     */
+    void deleteArticle(Long articleId, String author);
+
+    /**
      * 更新文章的访问量
      */
     void updateArticleVisits(Long articleId, String author);

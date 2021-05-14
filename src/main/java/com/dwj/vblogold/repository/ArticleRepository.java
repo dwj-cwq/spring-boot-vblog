@@ -52,4 +52,6 @@ public interface ArticleRepository extends JpaRepositoryImplementation<ArticleEn
     @Query(value = "select * from article a where a.article_id = ?1 AND a.author = ?2", nativeQuery = true)
     ArticleEntity queryArticle(Long articleId, String author);
 
+    void deleteByArticleIdAndAuthor(Long articleId, String author);
+
 }

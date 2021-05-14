@@ -8,8 +8,10 @@ import com.dwj.vblogold.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 /**
  * @author dwj
@@ -26,6 +28,8 @@ public class UserServiceImpl implements UserService {
         if (isExist(userEntity.getUserName())) {
             return null;
         }
+        userEntity.setCreateTime(new Date());
+        userEntity.setUpdateTime(new Date());
         return userRepository.save(userEntity);
     }
 

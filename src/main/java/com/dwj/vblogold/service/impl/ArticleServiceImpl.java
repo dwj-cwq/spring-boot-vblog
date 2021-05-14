@@ -124,4 +124,9 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleEntity queryArticleInfoById(Long id) {
         return articleRepository.findById(id).get();
     }
+
+    @Override
+    public void deleteArticle(Long articleId, String author) {
+        articleRepository.deleteByArticleIdAndAuthor(articleId, author);
+    }
 }
