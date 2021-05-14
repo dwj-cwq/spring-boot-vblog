@@ -78,6 +78,11 @@ public interface ArticleService {
     void updateArticleVisits(Long articleId, String author);
 
     /**
+     * 更新文章
+     */
+    void updateArticle(ArticleEntity articleEntity);
+
+    /**
      * 通过id查询文章简要信息，不包含文章内容
      *
      * @param id id

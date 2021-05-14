@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -127,6 +128,23 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void deleteArticle(Long articleId, String author) {
-        articleRepository.deleteByArticleIdAndAuthor(articleId, author);
+        final Optional<ArticleEntity> articleEntityOptional = articleRepository.findById(articleId);
+        articleEntityOptional.ifPresent(article -> {
+            if (!article.getAuthor().equals(author)) {
+                throw new RuntimeException("没有权删除辑该博客！");
+            }
+            articleRepository.deleteById(articleId);
+        });
+    }
+
+    @Override
+    public void updateArticle(ArticleEntity articleEntity) {
+        final Optional<ArticleEntity> articleEntityOptional = articleRepository.findById(articleEntity.getArticleId());
+        articleEntityOptional.ifPresent(article -> {
+            if (!article.getAuthor().equals(articleEntity.getAuthor())) {
+                throw new RuntimeException("没有权限编辑该博客！");
+            }
+            articleRepository.save(articleEntity);
+        });
     }
 }
